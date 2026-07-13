@@ -3,21 +3,29 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "scout": "tsx src/agents/scout.ts",
+    "clerk": "tsx src/agents/clerk.ts",
+    "activate": "tsx scripts/activate.ts",
+    "register-signal": "tsx scripts/register-signal.ts",
+    "init-portfolio": "tsx scripts/init-portfolio.ts",
+    "test": "tsx scripts/test-integration.ts",
+    "test:engine": "tsx scripts/test-engine.ts",
+    "replay": "tsx scripts/run-replay.ts",
+    "build": "tsc"
   },
   "dependencies": {
-    "next": "16.2.10",
-    "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "@coral-xyz/anchor": "^0.32.1",
+    "@solana/spl-token": "^0.4.15",
+    "@solana/web3.js": "^1.98.4",
+    "@supabase/supabase-js": "^2.110.2",
+    "axios": "^1.18.1",
+    "bs58": "^6.0.0",
+    "eventsource": "^4.1.0",
+    "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "tailwindcss": "^4",
+    "tsx": "^4.23.0",
     "typescript": "^5"
   }
 }
