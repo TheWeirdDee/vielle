@@ -42,9 +42,14 @@ next-env.d.ts
 
 !.env.example
 
-# replay cache
+# replay cache — regenerable via fetchAndCacheMatch(), EXCEPT the two
+# matches independent-verify.ts and the /verify dashboard page depend on:
+# those are committed on purpose, so cloning the repo is enough to
+# independently re-verify without live TxLINE credentials.
 /data/replay-cache/*
 !/data/replay-cache/.gitkeep
+!/data/replay-cache/18222446.json
+!/data/replay-cache/18213979.json
 
 # agent logs
 /logs/
