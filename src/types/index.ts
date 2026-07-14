@@ -11,7 +11,6 @@ export type Position = 'long_home' | 'long_away' | 'short_home' | 'short_away'
 
 export type AgentName = 'scout' | 'clerk'
 export type AgentLogEvent =
-  | 'heartbeat'
   | 'reconnect'
   | 'jwt_renewal'
   | 'snapshot_recovery'

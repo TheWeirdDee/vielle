@@ -16,7 +16,7 @@ import { getSupabase } from '../lib/supabase'
 import { updatePortfolio } from '../lib/portfolio'
 import { writeSettlementOnChain } from '../lib/onchain'
 import { notifySubscribers } from '../lib/subscribers'
-import { log, sleep } from '../lib/resilience'
+import { heartbeat, log, sleep } from '../lib/resilience'
 import type { GamePhase, TxLineScoresRecord } from '../lib/txline/types'
 import type { Strategy, VeilleSignal, Winner } from '../types'
 
@@ -166,6 +166,7 @@ async function settleMatch(matchId: string): Promise<void> {
 async function main(): Promise<void> {
   console.log('VEILLE CLERK starting…')
   await log('clerk', 'reconnect', { status: 'starting' })
+  void heartbeat('clerk')
   let running = true
   process.on('SIGINT', () => (running = false))
   process.on('SIGTERM', () => (running = false))
@@ -180,7 +181,7 @@ async function main(): Promise<void> {
           await sleep(1000)
         }
       }
-      await log('clerk', 'heartbeat', { open_matches: matchIds.length }, 'info')
+      await heartbeat('clerk')
     } catch (error) {
       await log('clerk', 'reconnect', { error: String(error) }, 'warning')
     }

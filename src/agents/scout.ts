@@ -18,7 +18,7 @@ import { connectResilientStreams } from '../lib/resilient-stream'
 import { SignalDetector } from '../lib/signal-detector'
 import { loadSignalDefinition } from '../lib/registry'
 import { getSupabase } from '../lib/supabase'
-import { log } from '../lib/resilience'
+import { heartbeat, log } from '../lib/resilience'
 import { writeSignalOnChain } from '../lib/onchain'
 import { notifySubscribers } from '../lib/subscribers'
 import type { VeilleSignal } from '../types'
@@ -125,9 +125,10 @@ async function main(): Promise<void> {
   process.on('SIGINT', () => shutdown('SIGINT'))
   process.on('SIGTERM', () => shutdown('SIGTERM'))
 
+  void heartbeat('scout')
   setInterval(() => {
     console.log(`[SCOUT] alive - ${new Date().toISOString()}`)
-    void log('scout', 'heartbeat', {}, 'info')
+    void heartbeat('scout')
   }, 120_000)
 }
 

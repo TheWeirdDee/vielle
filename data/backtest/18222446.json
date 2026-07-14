@@ -1,0 +1,134 @@
+{
+  "matchId": "18222446",
+  "homeTeam": "Argentina",
+  "awayTeam": "Switzerland",
+  "homeScore": 3,
+  "awayScore": 1,
+  "phase": "FET",
+  "winner": "home",
+  "keyEvents": [
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 10,
+      "timestamp": 1783818619532
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 44,
+      "timestamp": 1783820654168
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 67,
+      "timestamp": 1783823299482
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 69,
+      "timestamp": 1783823413293
+    },
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 72,
+      "timestamp": 1783823561008
+    },
+    {
+      "type": "red_card",
+      "team": "away",
+      "minute": 72,
+      "timestamp": 1783823568543
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 97,
+      "timestamp": 1783825914404
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 98,
+      "timestamp": 1783826002846
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 112,
+      "timestamp": 1783827127672
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 114,
+      "timestamp": 1783827255045
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 121,
+      "timestamp": 1783827669666
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 123,
+      "timestamp": 1783827796808
+    }
+  ],
+  "fires": [
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "A",
+      "matchId": "18222446",
+      "homeTeam": "Argentina",
+      "awayTeam": "Switzerland",
+      "triggerEvent": "red_card",
+      "triggerMinute": 72,
+      "preEventHomeProb": 0.32134,
+      "preEventAwayProb": 0.06803,
+      "postSignalHomeProb": 0.46125,
+      "postSignalAwayProb": 0.06803,
+      "delta": 0.13990999999999998,
+      "windowSeconds": 114.148,
+      "favouredTeam": "home",
+      "position": "long_home",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783823662347,
+      "outcome": "hit",
+      "actualWinner": "home"
+    },
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "B",
+      "matchId": "18222446",
+      "homeTeam": "Argentina",
+      "awayTeam": "Switzerland",
+      "triggerEvent": "red_card",
+      "triggerMinute": 72,
+      "preEventHomeProb": 0.32134,
+      "preEventAwayProb": 0.06803,
+      "postSignalHomeProb": 0.46125,
+      "postSignalAwayProb": 0.06803,
+      "delta": 0.13990999999999998,
+      "windowSeconds": 114.148,
+      "favouredTeam": "home",
+      "position": "short_home",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783823662347,
+      "outcome": "miss",
+      "actualWinner": "home"
+    }
+  ],
+  "computedAt": "2026-07-14T06:29:34.935Z"
+}
