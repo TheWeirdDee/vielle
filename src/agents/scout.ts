@@ -125,7 +125,10 @@ async function main(): Promise<void> {
   process.on('SIGINT', () => shutdown('SIGINT'))
   process.on('SIGTERM', () => shutdown('SIGTERM'))
 
-  setInterval(() => console.log(`[SCOUT] alive - ${new Date().toISOString()}`), 60_000)
+  setInterval(() => {
+    console.log(`[SCOUT] alive - ${new Date().toISOString()}`)
+    void log('scout', 'heartbeat', {}, 'info')
+  }, 120_000)
 }
 
 main().catch(async (err: unknown) => {

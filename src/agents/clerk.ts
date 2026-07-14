@@ -180,6 +180,7 @@ async function main(): Promise<void> {
           await sleep(1000)
         }
       }
+      await log('clerk', 'heartbeat', { open_matches: matchIds.length }, 'info')
     } catch (error) {
       await log('clerk', 'reconnect', { error: String(error) }, 'warning')
     }
