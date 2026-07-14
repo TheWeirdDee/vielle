@@ -166,7 +166,12 @@ async function settleMatch(matchId: string): Promise<void> {
 async function main(): Promise<void> {
   console.log('VEILLE CLERK starting…')
   await log('clerk', 'reconnect', { status: 'starting' })
+
+  // Heartbeat runs on its own clock, independent of the poll loop below, so
+  // liveness is reported every 60s regardless of how long a poll cycle takes.
   void heartbeat('clerk')
+  const heartbeatTimer = setInterval(() => void heartbeat('clerk'), 60_000)
+
   let running = true
   process.on('SIGINT', () => (running = false))
   process.on('SIGTERM', () => (running = false))
@@ -181,12 +186,12 @@ async function main(): Promise<void> {
           await sleep(1000)
         }
       }
-      await heartbeat('clerk')
     } catch (error) {
       await log('clerk', 'reconnect', { error: String(error) }, 'warning')
     }
     await sleep(POLL_INTERVAL_MS)
   }
+  clearInterval(heartbeatTimer)
   console.log('CLERK shutting down…')
 }
 

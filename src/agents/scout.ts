@@ -129,7 +129,7 @@ async function main(): Promise<void> {
   setInterval(() => {
     console.log(`[SCOUT] alive - ${new Date().toISOString()}`)
     void heartbeat('scout')
-  }, 120_000)
+  }, 60_000)
 }
 
 main().catch(async (err: unknown) => {
