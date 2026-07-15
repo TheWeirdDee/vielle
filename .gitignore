@@ -54,3 +54,10 @@ next-env.d.ts
 
 # agent logs
 /logs/
+
+# demo materials — never committed
+DEMO_SCRIPT.md
+*.mp4
+*.mov
+*.webm
+*.mkv

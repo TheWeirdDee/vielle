@@ -40,6 +40,13 @@ import {
 
 export const WORLD_CUP_COMPETITION_ID = 72
 
+/**
+ * Default fixtures lookback. Must reach back to matchday 1 (June 11) —
+ * TxLINE serves scores/odds history buckets for the whole tournament, and a
+ * shorter window here silently hides older fixtures from history scans.
+ */
+const FIXTURE_LOOKBACK_DAYS = 45
+
 /** How far around kickoff the history bucket scan reaches. */
 const PRE_MATCH_MS = 60 * 60_000
 const MAX_MATCH_MS = 5 * 60 * 60_000
@@ -122,7 +129,7 @@ async function apiGetArrayOrSse<T>(pathname: string): Promise<T[]> {
 export interface FixtureQuery {
   /** Defaults to the World Cup (72). Pass null to query every competition. */
   competitionId?: number | null
-  /** Days since unix epoch; defaults to 13 days ago (tournament window). */
+  /** Days since unix epoch; defaults to FIXTURE_LOOKBACK_DAYS ago (whole tournament). */
   startEpochDay?: number
 }
 
@@ -130,7 +137,7 @@ export async function getFixtures(params?: FixtureQuery): Promise<Fixture[]> {
   const search = new URLSearchParams()
   const competitionId = params?.competitionId === undefined ? WORLD_CUP_COMPETITION_ID : params.competitionId
   if (competitionId !== null) search.set('competitionId', String(competitionId))
-  const startEpochDay = params?.startEpochDay ?? Math.floor(Date.now() / 86400000) - 13
+  const startEpochDay = params?.startEpochDay ?? Math.floor(Date.now() / 86400000) - FIXTURE_LOOKBACK_DAYS
   search.set('startEpochDay', String(startEpochDay))
 
   const records = await apiGet<TxLineFixtureRecord[]>(`/fixtures/snapshot?${search.toString()}`)
@@ -146,7 +153,7 @@ async function getFixtureRecord(matchId: string): Promise<TxLineFixtureRecord | 
   const fresh = fixtureIndex && Date.now() - fixtureIndex.at < FIXTURE_INDEX_TTL_MS
   if (!fresh || !fixtureIndex?.byId.has(matchId)) {
     const records = await apiGet<TxLineFixtureRecord[]>(
-      `/fixtures/snapshot?competitionId=${WORLD_CUP_COMPETITION_ID}&startEpochDay=${Math.floor(Date.now() / 86400000) - 13}`
+      `/fixtures/snapshot?competitionId=${WORLD_CUP_COMPETITION_ID}&startEpochDay=${Math.floor(Date.now() / 86400000) - FIXTURE_LOOKBACK_DAYS}`
     )
     fixtureIndex = { at: Date.now(), byId: new Map(records.map((r) => [String(r.FixtureId), r])) }
   }

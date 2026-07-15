@@ -21,6 +21,7 @@ import * as path from 'node:path'
 import { startReplay } from '../src/lib/txline/replay'
 import { SignalDetector } from '../src/lib/signal-detector'
 import { loadSignalDefinition } from '../src/lib/registry'
+import { MATCH_WINNER_MARKET } from '../src/lib/txline/normalize'
 import type { EventType, GamePhase, MatchState } from '../src/lib/txline/types'
 import type { VeilleSignal, Winner } from '../src/types'
 
@@ -38,6 +39,32 @@ interface BacktestFire extends VeilleSignal {
   actualWinner: Winner
 }
 
+/** One downsampled full-match 1X2 probability point. */
+interface ProbPoint {
+  t: number
+  h: number
+  a: number
+}
+
+/**
+ * Downsample the 1X2 tick stream for the dashboard's animated replay:
+ * one point per 30s baseline, densified to 5s around goals/red cards where
+ * the story actually happens. Keeps a match under ~400 points.
+ */
+function downsampleProbs(ticks: ProbPoint[], keyEvents: KeyEvent[]): ProbPoint[] {
+  const hot = keyEvents.filter((e) => e.type === 'goal' || e.type === 'red_card').map((e) => e.timestamp)
+  const isHot = (t: number): boolean => hot.some((h) => t >= h - 60_000 && t <= h + 300_000)
+  const out: ProbPoint[] = []
+  let last = -Infinity
+  for (const p of ticks) {
+    if (p.t - last >= (isHot(p.t) ? 5_000 : 30_000)) {
+      out.push({ t: p.t, h: Math.round(p.h * 10000) / 10000, a: Math.round(p.a * 10000) / 10000 })
+      last = p.t
+    }
+  }
+  return out
+}
+
 interface BacktestResult {
   matchId: string
   homeTeam: string
@@ -48,6 +75,8 @@ interface BacktestResult {
   winner: Winner
   keyEvents: KeyEvent[]
   fires: BacktestFire[]
+  /** Downsampled full-match 1X2 probabilities for the animated replay. */
+  probSeries: ProbPoint[]
   computedAt: string
 }
 
@@ -69,6 +98,7 @@ async function backtest(matchId: string): Promise<BacktestResult> {
   const detector = new SignalDetector(def)
   const keyEvents: KeyEvent[] = []
   const fires: VeilleSignal[] = []
+  const oneXtwoTicks: ProbPoint[] = []
   let finalState: MatchState | null = null
 
   await startReplay(
@@ -82,6 +112,9 @@ async function backtest(matchId: string): Promise<BacktestResult> {
         }
       },
       onOddsEvent: (event) => {
+        if (event.market === MATCH_WINNER_MARKET) {
+          oneXtwoTicks.push({ t: event.timestamp, h: event.homeProb, a: event.awayProb })
+        }
         fires.push(...detector.onOddsEvent(event))
       },
       onError: (err) => console.error(`[${matchId}] replay error:`, err),
@@ -103,6 +136,7 @@ async function backtest(matchId: string): Promise<BacktestResult> {
     winner,
     keyEvents,
     fires: fires.map((f) => ({ ...f, outcome: outcomeForPosition(f.position, winner), actualWinner: winner })),
+    probSeries: downsampleProbs(oneXtwoTicks, keyEvents),
     computedAt: new Date().toISOString(),
   }
 }
@@ -117,20 +151,32 @@ async function main(): Promise<void> {
   const outDir = path.join(process.cwd(), 'data', 'backtest')
   fs.mkdirSync(outDir, { recursive: true })
 
+  let failed = 0
   for (const matchId of matchIds) {
     console.log(`Backtesting ${matchId}…`)
-    const result = await backtest(matchId)
-    const file = path.join(outDir, `${matchId}.json`)
-    fs.writeFileSync(file, JSON.stringify(result, null, 2))
-    console.log(
-      `  ${result.homeTeam} ${result.homeScore}-${result.awayScore} ${result.awayTeam} (${result.phase}) — ` +
-        `${result.keyEvents.length} key events, ${result.fires.length} signal fire(s) → ${file}`
-    )
-    for (const f of result.fires) {
+    try {
+      const result = await backtest(matchId)
+      const file = path.join(outDir, `${matchId}.json`)
+      fs.writeFileSync(file, JSON.stringify(result, null, 2))
       console.log(
-        `    Strategy ${f.strategy} @ ${f.triggerMinute}' ${f.triggerEvent} → ${f.position} → ${f.outcome}`
+        `  ${result.homeTeam} ${result.homeScore}-${result.awayScore} ${result.awayTeam} (${result.phase}) — ` +
+          `${result.keyEvents.length} key events, ${result.fires.length} signal fire(s) → ${file}`
       )
+      for (const f of result.fires) {
+        console.log(
+          `    Strategy ${f.strategy} @ ${f.triggerMinute}' ${f.triggerEvent} → ${f.position} → ${f.outcome}`
+        )
+      }
+    } catch (err) {
+      // One bad match (no historical data, transient API failure) must not
+      // abort the rest of the run — rerun later for the skipped ids.
+      failed += 1
+      console.error(`  SKIPPED ${matchId}: ${err instanceof Error ? err.message : String(err)}`)
     }
+  }
+  if (failed > 0) {
+    console.error(`\n${failed} match(es) skipped`)
+    process.exitCode = 1
   }
 }
 
