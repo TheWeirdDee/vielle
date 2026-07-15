@@ -1,0 +1,92 @@
+{
+  "matchId": "18176123",
+  "homeTeam": "Australia",
+  "awayTeam": "Egypt",
+  "homeScore": 1,
+  "awayScore": 1,
+  "phase": "FPE",
+  "winner": "draw",
+  "keyEvents": [
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 13,
+      "timestamp": 1783102354410
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 55,
+      "timestamp": 1783106171271
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 91,
+      "timestamp": 1783109044105
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 105,
+      "timestamp": 1783109850196
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 120,
+      "timestamp": 1783110938341
+    }
+  ],
+  "fires": [
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "A",
+      "matchId": "18176123",
+      "homeTeam": "Australia",
+      "awayTeam": "Egypt",
+      "triggerEvent": "goal",
+      "triggerMinute": 13,
+      "preEventHomeProb": 0.11013,
+      "preEventAwayProb": 0.37106,
+      "postSignalHomeProb": 0.11013,
+      "postSignalAwayProb": 0.66181,
+      "delta": 0.29075,
+      "windowSeconds": 71.166,
+      "favouredTeam": "away",
+      "position": "long_away",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783102425576,
+      "outcome": "miss",
+      "actualWinner": "draw"
+    },
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "B",
+      "matchId": "18176123",
+      "homeTeam": "Australia",
+      "awayTeam": "Egypt",
+      "triggerEvent": "goal",
+      "triggerMinute": 13,
+      "preEventHomeProb": 0.11013,
+      "preEventAwayProb": 0.37106,
+      "postSignalHomeProb": 0.11013,
+      "postSignalAwayProb": 0.66181,
+      "delta": 0.29075,
+      "windowSeconds": 71.166,
+      "favouredTeam": "away",
+      "position": "short_away",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783102425576,
+      "outcome": "hit",
+      "actualWinner": "draw"
+    }
+  ],
+  "computedAt": "2026-07-14T21:57:04.467Z"
+}

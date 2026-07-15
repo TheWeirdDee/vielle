@@ -86,6 +86,21 @@ function clockToMinute(clock: TxLineScoresRecord['Clock']): number {
 }
 
 /**
+ * A scored penalty never gets a `goal` action record — the goal arrives as
+ * `penalty_outcome` with Outcome "Scored" and the incremented Score block.
+ * Map it to a goal event; the counter-backed dedupe in ScoresNormalizer
+ * gates emission on the Goals total actually moving, so the enrichment
+ * burst (bare → +player) and shootout records stay silent.
+ */
+function eventTypeForRecord(record: TxLineScoresRecord): EventType | null {
+  if (record.Action === 'penalty_outcome') {
+    const outcome = (record.Data as { Outcome?: string } | null | undefined)?.Outcome
+    return outcome === 'Scored' ? 'goal' : null
+  }
+  return ACTION_TO_EVENT_TYPE[record.Action] ?? null
+}
+
+/**
  * Normalize one raw scores record. Returns null for actions outside the shared
  * event vocabulary (possession updates, lineups, connection chatter, ...).
  */
@@ -93,7 +108,7 @@ export function normalizeScoresRecord(
   record: TxLineScoresRecord,
   participant1IsHome: boolean = record.Participant1IsHome ?? true
 ): MatchEvent | null {
-  const type = ACTION_TO_EVENT_TYPE[record.Action]
+  const type = eventTypeForRecord(record)
   if (!type) return null
 
   const data: Record<string, unknown> = {

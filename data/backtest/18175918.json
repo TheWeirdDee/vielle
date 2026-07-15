@@ -1,0 +1,61 @@
+{
+  "matchId": "18175918",
+  "homeTeam": "Argentina",
+  "awayTeam": "Cape Verde",
+  "homeScore": 3,
+  "awayScore": 2,
+  "phase": "FET",
+  "winner": "home",
+  "keyEvents": [
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 29,
+      "timestamp": 1783117714923
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 59,
+      "timestamp": 1783120781512
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 68,
+      "timestamp": 1783121322695
+    },
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 90,
+      "timestamp": 1783122625420
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 92,
+      "timestamp": 1783123604599
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 103,
+      "timestamp": 1783124249728
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 111,
+      "timestamp": 1783125086754
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 115,
+      "timestamp": 1783125332351
+    }
+  ],
+  "fires": [],
+  "computedAt": "2026-07-14T21:57:51.856Z"
+}

@@ -1,0 +1,128 @@
+{
+  "matchId": "18185036",
+  "homeTeam": "Canada",
+  "awayTeam": "Morocco",
+  "homeScore": 0,
+  "awayScore": 3,
+  "phase": "F",
+  "winner": "away",
+  "keyEvents": [
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 20,
+      "timestamp": 1783185655299
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 40,
+      "timestamp": 1783186838381
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 41,
+      "timestamp": 1783186881849
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 43,
+      "timestamp": 1783187045585
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 45,
+      "timestamp": 1783187123354
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 51,
+      "timestamp": 1783187488967
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 49,
+      "timestamp": 1783188765648
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 50,
+      "timestamp": 1783188814365
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 67,
+      "timestamp": 1783189864190
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 82,
+      "timestamp": 1783190734762
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 98,
+      "timestamp": 1783191713063
+    }
+  ],
+  "fires": [
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "A",
+      "matchId": "18185036",
+      "homeTeam": "Canada",
+      "awayTeam": "Morocco",
+      "triggerEvent": "goal",
+      "triggerMinute": 50,
+      "preEventHomeProb": 0.06452,
+      "preEventAwayProb": 0.33113,
+      "postSignalHomeProb": 0.06452,
+      "postSignalAwayProb": 0.7102299999999999,
+      "delta": 0.37909999999999994,
+      "windowSeconds": 68.62,
+      "favouredTeam": "away",
+      "position": "long_away",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783188882985,
+      "outcome": "hit",
+      "actualWinner": "away"
+    },
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "B",
+      "matchId": "18185036",
+      "homeTeam": "Canada",
+      "awayTeam": "Morocco",
+      "triggerEvent": "goal",
+      "triggerMinute": 50,
+      "preEventHomeProb": 0.06452,
+      "preEventAwayProb": 0.33113,
+      "postSignalHomeProb": 0.06452,
+      "postSignalAwayProb": 0.7102299999999999,
+      "delta": 0.37909999999999994,
+      "windowSeconds": 68.62,
+      "favouredTeam": "away",
+      "position": "short_away",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783188882985,
+      "outcome": "miss",
+      "actualWinner": "away"
+    }
+  ],
+  "computedAt": "2026-07-14T21:59:13.431Z"
+}

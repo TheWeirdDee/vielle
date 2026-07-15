@@ -1,0 +1,55 @@
+{
+  "matchId": "18188721",
+  "homeTeam": "Paraguay",
+  "awayTeam": "France",
+  "homeScore": 0,
+  "awayScore": 1,
+  "phase": "F",
+  "winner": "away",
+  "keyEvents": [
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 19,
+      "timestamp": 1783200142578
+    },
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 67,
+      "timestamp": 1783204272516
+    },
+    {
+      "type": "penalty",
+      "team": "away",
+      "minute": 68,
+      "timestamp": 1783204275749
+    },
+    {
+      "type": "penalty",
+      "team": "away",
+      "minute": 68,
+      "timestamp": 1783204357142
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 70,
+      "timestamp": 1783204416647
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 81,
+      "timestamp": 1783205103786
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 97,
+      "timestamp": 1783206034978
+    }
+  ],
+  "fires": [],
+  "computedAt": "2026-07-14T21:59:46.430Z"
+}

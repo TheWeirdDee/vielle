@@ -4,7 +4,10 @@
  * All three registered conditions must hold on an incoming full-match 1X2
  * odds tick:
  *   1. the now-favoured team's probability rose more than deltaThreshold
- *      within the last windowSeconds,
+ *      from its last pre-trigger value, observed within windowSeconds
+ *      FOLLOWING the trigger event (bookmakers suspend the market around
+ *      goals, so the window anchors at the event — a trailing wall-clock
+ *      window would lose its baseline whenever the suspension outlasts it),
  *   2. a registered trigger event (goal/red_card) occurred within the last
  *      lookbackSeconds,
  *   3. immediately before that trigger the now-favoured team's probability
@@ -157,8 +160,9 @@ export class SignalDetector {
 
     // Trigger event must be within lookback.
     if (now - t.lastTrigger.ts > this.def.lookbackSeconds * 1000) return []
+    // The shock must complete within windowSeconds following the trigger.
+    if (now - t.lastTrigger.ts > this.def.windowSeconds * 1000) return []
 
-    const windowStartMs = now - this.def.windowSeconds * 1000
     const check = (
       window: OddsWindow[],
       currentProb: number,
@@ -167,15 +171,13 @@ export class SignalDetector {
       // Must actually be the favourite after the move, not just have risen.
       if (currentProb <= opponentProb) return null
 
-      const baseline = window.find((w) => w.timestamp >= windowStartMs && w.timestamp < now)
-      if (!baseline) return null
-      const delta = currentProb - baseline.prob
-      if (delta <= this.def.deltaThreshold) return null
-
       const preEvent = [...window].reverse().find((w) => w.timestamp < t.lastTrigger!.ts)
       if (!preEvent || preEvent.prob >= this.def.preEventProbCap) return null
 
-      return { delta, windowSeconds: (now - baseline.timestamp) / 1000, preEvent }
+      const delta = currentProb - preEvent.prob
+      if (delta <= this.def.deltaThreshold) return null
+
+      return { delta, windowSeconds: (now - t.lastTrigger!.ts) / 1000, preEvent }
     }
 
     const homeResult = check(t.homeWindow, event.homeProb, event.awayProb)

@@ -1,0 +1,104 @@
+{
+  "matchId": "18218149",
+  "homeTeam": "Spain",
+  "awayTeam": "Belgium",
+  "homeScore": 2,
+  "awayScore": 1,
+  "phase": "F",
+  "winner": "home",
+  "keyEvents": [
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 30,
+      "timestamp": 1783711800378
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 41,
+      "timestamp": 1783712450203
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 43,
+      "timestamp": 1783712592101
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 85,
+      "timestamp": 1783716406350
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 88,
+      "timestamp": 1783716577032
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 93,
+      "timestamp": 1783716875174
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 95,
+      "timestamp": 1783716992158
+    }
+  ],
+  "fires": [
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "A",
+      "matchId": "18218149",
+      "homeTeam": "Spain",
+      "awayTeam": "Belgium",
+      "triggerEvent": "goal",
+      "triggerMinute": 88,
+      "preEventHomeProb": 0.26476,
+      "preEventAwayProb": 0.00435,
+      "postSignalHomeProb": 0.93023,
+      "postSignalAwayProb": 0.00435,
+      "delta": 0.66547,
+      "windowSeconds": 59.888,
+      "favouredTeam": "home",
+      "position": "long_home",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783716636920,
+      "outcome": "hit",
+      "actualWinner": "home"
+    },
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "B",
+      "matchId": "18218149",
+      "homeTeam": "Spain",
+      "awayTeam": "Belgium",
+      "triggerEvent": "goal",
+      "triggerMinute": 88,
+      "preEventHomeProb": 0.26476,
+      "preEventAwayProb": 0.00435,
+      "postSignalHomeProb": 0.93023,
+      "postSignalAwayProb": 0.00435,
+      "delta": 0.66547,
+      "windowSeconds": 59.888,
+      "favouredTeam": "home",
+      "position": "short_home",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783716636920,
+      "outcome": "miss",
+      "actualWinner": "home"
+    }
+  ],
+  "computedAt": "2026-07-14T22:03:37.468Z"
+}

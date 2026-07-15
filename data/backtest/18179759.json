@@ -1,0 +1,55 @@
+{
+  "matchId": "18179759",
+  "homeTeam": "Mexico",
+  "awayTeam": "Ecuador",
+  "homeScore": 2,
+  "awayScore": 0,
+  "phase": "F",
+  "winner": "home",
+  "keyEvents": [
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 22,
+      "timestamp": 1782872525148
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 31,
+      "timestamp": 1782873079894
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 47,
+      "timestamp": 1782874010047
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 93,
+      "timestamp": 1782878099132
+    },
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 95,
+      "timestamp": 1782878216589
+    },
+    {
+      "type": "red_card",
+      "team": "away",
+      "minute": 95,
+      "timestamp": 1782878219832
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 99,
+      "timestamp": 1782878441248
+    }
+  ],
+  "fires": [],
+  "computedAt": "2026-07-14T21:51:50.128Z"
+}

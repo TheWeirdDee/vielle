@@ -1,0 +1,164 @@
+{
+  "matchId": "18193785",
+  "homeTeam": "USA",
+  "awayTeam": "Belgium",
+  "homeScore": 1,
+  "awayScore": 4,
+  "phase": "F",
+  "winner": "away",
+  "keyEvents": [
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 9,
+      "timestamp": 1783382951303
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 31,
+      "timestamp": 1783384267350
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 33,
+      "timestamp": 1783384383211
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 35,
+      "timestamp": 1783384499183
+    },
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 46,
+      "timestamp": 1783385153847
+    },
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 49,
+      "timestamp": 1783385316159
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 57,
+      "timestamp": 1783387238391
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 69,
+      "timestamp": 1783387931283
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 93,
+      "timestamp": 1783389386537
+    }
+  ],
+  "fires": [
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "A",
+      "matchId": "18193785",
+      "homeTeam": "USA",
+      "awayTeam": "Belgium",
+      "triggerEvent": "goal",
+      "triggerMinute": 9,
+      "preEventHomeProb": 0.17581,
+      "preEventAwayProb": 0.35524,
+      "postSignalHomeProb": 0.17581,
+      "postSignalAwayProb": 0.5800500000000001,
+      "delta": 0.22481000000000007,
+      "windowSeconds": 59.088,
+      "favouredTeam": "away",
+      "position": "long_away",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783383010391,
+      "outcome": "hit",
+      "actualWinner": "away"
+    },
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "B",
+      "matchId": "18193785",
+      "homeTeam": "USA",
+      "awayTeam": "Belgium",
+      "triggerEvent": "goal",
+      "triggerMinute": 9,
+      "preEventHomeProb": 0.17581,
+      "preEventAwayProb": 0.35524,
+      "postSignalHomeProb": 0.17581,
+      "postSignalAwayProb": 0.5800500000000001,
+      "delta": 0.22481000000000007,
+      "windowSeconds": 59.088,
+      "favouredTeam": "away",
+      "position": "short_away",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783383010391,
+      "outcome": "miss",
+      "actualWinner": "away"
+    },
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "A",
+      "matchId": "18193785",
+      "homeTeam": "USA",
+      "awayTeam": "Belgium",
+      "triggerEvent": "goal",
+      "triggerMinute": 31,
+      "preEventHomeProb": 0.14723,
+      "preEventAwayProb": 0.32616,
+      "postSignalHomeProb": 0.32852,
+      "postSignalAwayProb": 0.32616,
+      "delta": 0.18128999999999998,
+      "windowSeconds": 67.481,
+      "favouredTeam": "home",
+      "position": "long_home",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783384334831,
+      "outcome": "miss",
+      "actualWinner": "away"
+    },
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "B",
+      "matchId": "18193785",
+      "homeTeam": "USA",
+      "awayTeam": "Belgium",
+      "triggerEvent": "goal",
+      "triggerMinute": 31,
+      "preEventHomeProb": 0.14723,
+      "preEventAwayProb": 0.32616,
+      "postSignalHomeProb": 0.32852,
+      "postSignalAwayProb": 0.32616,
+      "delta": 0.18128999999999998,
+      "windowSeconds": 67.481,
+      "favouredTeam": "home",
+      "position": "short_home",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783384334831,
+      "outcome": "hit",
+      "actualWinner": "away"
+    }
+  ],
+  "computedAt": "2026-07-14T22:01:31.036Z"
+}

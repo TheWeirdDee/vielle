@@ -187,7 +187,6 @@ interface Check {
   triggerMinute: number
   ts: number
   favouredTeam: 'home' | 'away'
-  baselineProb: number
   preEventProb: number
   postProb: number
   delta: number
@@ -216,6 +215,7 @@ function evaluate(triggers: Trigger[], oddsPoints: OddsPoint[]): Check[] {
     }
     if (!active) continue
     if ((point.ts - active.ts) / 1000 > LOOKBACK_SECONDS) continue // condition 2 window expired
+    if ((point.ts - active.ts) / 1000 > WINDOW_SECONDS) continue // condition 1: shock must complete within windowSeconds following the trigger
 
     // Home checked first, then away — matches production's `homeResult ??
     // check(away)`: only one side can fire per tick, and firing stops
@@ -225,23 +225,22 @@ function evaluate(triggers: Trigger[], oddsPoints: OddsPoint[]): Check[] {
       const opponentProb = side === 'home' ? point.awayProb : point.homeProb
       if (currentProb <= opponentProb) continue // must actually be favoured, not just rising
 
-      const windowStart = point.ts - WINDOW_SECONDS * 1000
-      const baseline = oddsPoints.find((p) => p.ts >= windowStart && p.ts < point.ts)
-      if (!baseline) continue
-      const baselineProb = side === 'home' ? baseline.homeProb : baseline.awayProb
-      const delta = currentProb - baselineProb
-
+      // Delta anchors at the last pre-trigger tick: bookmakers suspend the
+      // market around goals, so a trailing wall-clock baseline disappears
+      // whenever the suspension outlasts the window. "Shift within 120s
+      // following the event" = pre-event prob vs any tick <= trigger+120s.
       const preEvent = [...oddsPoints].reverse().find((p) => p.ts < active!.ts)
       const preEventProb = preEvent ? (side === 'home' ? preEvent.homeProb : preEvent.awayProb) : null
+      const delta = preEventProb === null ? 0 : currentProb - preEventProb
 
       let fires = true
       let reasonIfNot: string | undefined
-      if (delta <= DELTA_THRESHOLD) {
-        fires = false
-        reasonIfNot = `delta ${(delta * 100).toFixed(1)}pp <= ${DELTA_THRESHOLD * 100}pp threshold`
-      } else if (preEventProb === null) {
+      if (preEventProb === null) {
         fires = false
         reasonIfNot = 'no pre-event odds point available'
+      } else if (delta <= DELTA_THRESHOLD) {
+        fires = false
+        reasonIfNot = `delta ${(delta * 100).toFixed(1)}pp <= ${DELTA_THRESHOLD * 100}pp threshold`
       } else if (preEventProb >= PRE_EVENT_PROB_CAP) {
         fires = false
         reasonIfNot = `pre-event prob ${(preEventProb * 100).toFixed(1)}% >= ${PRE_EVENT_PROB_CAP * 100}% cap — not an underdog`
@@ -255,7 +254,6 @@ function evaluate(triggers: Trigger[], oddsPoints: OddsPoint[]): Check[] {
           triggerMinute: active.minute,
           ts: point.ts,
           favouredTeam: side,
-          baselineProb,
           preEventProb: preEventProb ?? -1,
           postProb: currentProb,
           delta,
@@ -271,7 +269,6 @@ function evaluate(triggers: Trigger[], oddsPoints: OddsPoint[]): Check[] {
           triggerMinute: active.minute,
           ts: point.ts,
           favouredTeam: side,
-          baselineProb,
           preEventProb: preEventProb ?? -1,
           postProb: currentProb,
           delta,

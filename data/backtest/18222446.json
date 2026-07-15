@@ -94,7 +94,7 @@
       "postSignalHomeProb": 0.46125,
       "postSignalAwayProb": 0.06803,
       "delta": 0.13990999999999998,
-      "windowSeconds": 114.148,
+      "windowSeconds": 93.804,
       "favouredTeam": "home",
       "position": "long_home",
       "recoveredFromSnapshot": false,
@@ -118,7 +118,7 @@
       "postSignalHomeProb": 0.46125,
       "postSignalAwayProb": 0.06803,
       "delta": 0.13990999999999998,
-      "windowSeconds": 114.148,
+      "windowSeconds": 93.804,
       "favouredTeam": "home",
       "position": "short_home",
       "recoveredFromSnapshot": false,
@@ -130,5 +130,5 @@
       "actualWinner": "home"
     }
   ],
-  "computedAt": "2026-07-14T06:29:34.935Z"
+  "computedAt": "2026-07-14T22:03:40.677Z"
 }

@@ -50,6 +50,7 @@ next-env.d.ts
 !/data/replay-cache/.gitkeep
 !/data/replay-cache/18222446.json
 !/data/replay-cache/18213979.json
+!/data/replay-cache/18237038.json
 
 # agent logs
 /logs/

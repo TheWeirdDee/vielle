@@ -1,0 +1,55 @@
+{
+  "matchId": "18179549",
+  "homeTeam": "Colombia",
+  "awayTeam": "Ghana",
+  "homeScore": 1,
+  "awayScore": 0,
+  "phase": "F",
+  "winner": "home",
+  "keyEvents": [
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 13,
+      "timestamp": 1783129340509
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 14,
+      "timestamp": 1783129449017
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 49,
+      "timestamp": 1783132973060
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 56,
+      "timestamp": 1783133384328
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 66,
+      "timestamp": 1783133974314
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 76,
+      "timestamp": 1783134570708
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 78,
+      "timestamp": 1783134686415
+    }
+  ],
+  "fires": [],
+  "computedAt": "2026-07-14T21:58:31.167Z"
+}

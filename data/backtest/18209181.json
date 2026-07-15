@@ -1,0 +1,55 @@
+{
+  "matchId": "18209181",
+  "homeTeam": "France",
+  "awayTeam": "Morocco",
+  "homeScore": 2,
+  "awayScore": 0,
+  "phase": "F",
+  "winner": "home",
+  "keyEvents": [
+    {
+      "type": "penalty",
+      "team": "home",
+      "minute": 25,
+      "timestamp": 1783628726195
+    },
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 27,
+      "timestamp": 1783628835893
+    },
+    {
+      "type": "penalty",
+      "team": "home",
+      "minute": 25,
+      "timestamp": 1783628843789
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 49,
+      "timestamp": 1783630178066
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 60,
+      "timestamp": 1783632227774
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 63,
+      "timestamp": 1783632424001
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 66,
+      "timestamp": 1783632590354
+    }
+  ],
+  "fires": [],
+  "computedAt": "2026-07-14T22:03:10.588Z"
+}

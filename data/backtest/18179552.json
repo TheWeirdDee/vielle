@@ -1,0 +1,37 @@
+{
+  "matchId": "18179552",
+  "homeTeam": "Switzerland",
+  "awayTeam": "Algeria",
+  "homeScore": 2,
+  "awayScore": 0,
+  "phase": "F",
+  "winner": "home",
+  "keyEvents": [
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 11,
+      "timestamp": 1783048221286
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 36,
+      "timestamp": 1783049739380
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 46,
+      "timestamp": 1783051552644
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 72,
+      "timestamp": 1783053104073
+    }
+  ],
+  "fires": [],
+  "computedAt": "2026-07-14T21:56:18.600Z"
+}

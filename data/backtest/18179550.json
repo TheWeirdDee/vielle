@@ -1,0 +1,170 @@
+{
+  "matchId": "18179550",
+  "homeTeam": "Belgium",
+  "awayTeam": "Senegal",
+  "homeScore": 3,
+  "awayScore": 2,
+  "phase": "FET",
+  "winner": "home",
+  "keyEvents": [
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 25,
+      "timestamp": 1782937480905
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 51,
+      "timestamp": 1782940396562
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 64,
+      "timestamp": 1782941143789
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 67,
+      "timestamp": 1782941366986
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 86,
+      "timestamp": 1782942491626
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 89,
+      "timestamp": 1782942649396
+    },
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 122,
+      "timestamp": 1782945542567
+    },
+    {
+      "type": "penalty",
+      "team": "home",
+      "minute": 122,
+      "timestamp": 1782945550438
+    },
+    {
+      "type": "penalty",
+      "team": "home",
+      "minute": 122,
+      "timestamp": 1782945552550
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 125,
+      "timestamp": 1782945760757
+    }
+  ],
+  "fires": [
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "A",
+      "matchId": "18179550",
+      "homeTeam": "Belgium",
+      "awayTeam": "Senegal",
+      "triggerEvent": "goal",
+      "triggerMinute": 25,
+      "preEventHomeProb": 0.2482,
+      "preEventAwayProb": 0.27056,
+      "postSignalHomeProb": 0.2482,
+      "postSignalAwayProb": 0.48077,
+      "delta": 0.21020999999999995,
+      "windowSeconds": 59.262,
+      "favouredTeam": "away",
+      "position": "long_away",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1782937540167,
+      "outcome": "miss",
+      "actualWinner": "home"
+    },
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "B",
+      "matchId": "18179550",
+      "homeTeam": "Belgium",
+      "awayTeam": "Senegal",
+      "triggerEvent": "goal",
+      "triggerMinute": 25,
+      "preEventHomeProb": 0.2482,
+      "preEventAwayProb": 0.27056,
+      "postSignalHomeProb": 0.2482,
+      "postSignalAwayProb": 0.48077,
+      "delta": 0.21020999999999995,
+      "windowSeconds": 59.262,
+      "favouredTeam": "away",
+      "position": "short_away",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1782937540167,
+      "outcome": "hit",
+      "actualWinner": "home"
+    },
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "A",
+      "matchId": "18179550",
+      "homeTeam": "Belgium",
+      "awayTeam": "Senegal",
+      "triggerEvent": "goal",
+      "triggerMinute": 89,
+      "preEventHomeProb": 0.02375,
+      "preEventAwayProb": 0.10387,
+      "postSignalHomeProb": 0.15463,
+      "postSignalAwayProb": 0.10387,
+      "delta": 0.13088,
+      "windowSeconds": 69.046,
+      "favouredTeam": "home",
+      "position": "long_home",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1782942718442,
+      "outcome": "hit",
+      "actualWinner": "home"
+    },
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "B",
+      "matchId": "18179550",
+      "homeTeam": "Belgium",
+      "awayTeam": "Senegal",
+      "triggerEvent": "goal",
+      "triggerMinute": 89,
+      "preEventHomeProb": 0.02375,
+      "preEventAwayProb": 0.10387,
+      "postSignalHomeProb": 0.15463,
+      "postSignalAwayProb": 0.10387,
+      "delta": 0.13088,
+      "windowSeconds": 69.046,
+      "favouredTeam": "home",
+      "position": "short_home",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1782942718442,
+      "outcome": "miss",
+      "actualWinner": "home"
+    }
+  ],
+  "computedAt": "2026-07-14T21:53:50.671Z"
+}

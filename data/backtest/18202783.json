@@ -1,0 +1,49 @@
+{
+  "matchId": "18202783",
+  "homeTeam": "Switzerland",
+  "awayTeam": "Colombia",
+  "homeScore": 0,
+  "awayScore": 0,
+  "phase": "FPE",
+  "winner": "draw",
+  "keyEvents": [
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 40,
+      "timestamp": 1783456815115
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 51,
+      "timestamp": 1783458621542
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 59,
+      "timestamp": 1783459080832
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 60,
+      "timestamp": 1783459169291
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 95,
+      "timestamp": 1783461848309
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 105,
+      "timestamp": 1783462479377
+    }
+  ],
+  "fires": [],
+  "computedAt": "2026-07-14T22:02:48.659Z"
+}

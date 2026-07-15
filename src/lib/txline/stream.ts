@@ -22,6 +22,11 @@ import type {
 
 const BACKOFF_MS = [1000, 2000, 4000, 8000, 16000, 30000]
 const MAX_QUEUE = 2000
+// A half-open TCP connection delivers no bytes and never errors, so read()
+// blocks forever while the process heartbeat keeps reporting healthy. If no
+// bytes at all arrive for this long, abort and reconnect.
+const IDLE_TIMEOUT_MS = 150_000
+const IDLE_CHECK_MS = 30_000
 
 // ---------------------------------------------------------------------------
 // SSE plumbing
@@ -48,7 +53,10 @@ function parseSseBlock(block: string): SseMessage | null {
   return message.data || message.event || message.id ? message : null
 }
 
-async function* readSseMessages(body: ReadableStream<Uint8Array>): AsyncGenerator<SseMessage> {
+async function* readSseMessages(
+  body: ReadableStream<Uint8Array>,
+  onActivity?: () => void
+): AsyncGenerator<SseMessage> {
   const reader = body.getReader()
   const decoder = new TextDecoder()
   let buffer = ''
@@ -56,6 +64,7 @@ async function* readSseMessages(body: ReadableStream<Uint8Array>): AsyncGenerato
     for (;;) {
       const { value, done } = await reader.read()
       if (done) break
+      onActivity?.()
       buffer += decoder.decode(value, { stream: true })
       let sep = buffer.match(/\r?\n\r?\n/)
       while (sep?.index !== undefined) {
@@ -146,20 +155,33 @@ function startSseLoop(
         backoffIdx = 0
         authRetried = false
 
-        for await (const message of readSseMessages(res.body)) {
-          if (handle.closed) break
-          if (!message.data) continue
-          let data: unknown
-          try {
-            data = JSON.parse(message.data) as unknown
-          } catch {
-            continue // heartbeat / non-JSON chatter
+        let lastActivity = Date.now()
+        const idleTimer = setInterval(() => {
+          if (Date.now() - lastActivity > IDLE_TIMEOUT_MS) {
+            controller.abort(new Error(`SSE ${path} idle for ${IDLE_TIMEOUT_MS / 1000}s — forcing reconnect`))
           }
-          if (Array.isArray(data)) {
-            for (const item of data) onRecord(item)
-          } else {
-            onRecord(data)
+        }, IDLE_CHECK_MS)
+
+        try {
+          for await (const message of readSseMessages(res.body, () => {
+            lastActivity = Date.now()
+          })) {
+            if (handle.closed) break
+            if (!message.data) continue
+            let data: unknown
+            try {
+              data = JSON.parse(message.data) as unknown
+            } catch {
+              continue // heartbeat / non-JSON chatter
+            }
+            if (Array.isArray(data)) {
+              for (const item of data) onRecord(item)
+            } else {
+              onRecord(data)
+            }
           }
+        } finally {
+          clearInterval(idleTimer)
         }
         if (handle.closed) return
         throw new Error(`SSE ${path} closed by server`)

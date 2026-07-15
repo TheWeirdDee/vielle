@@ -1,0 +1,43 @@
+{
+  "matchId": "18179551",
+  "homeTeam": "Spain",
+  "awayTeam": "Austria",
+  "homeScore": 3,
+  "awayScore": 0,
+  "phase": "F",
+  "winner": "home",
+  "keyEvents": [
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 29,
+      "timestamp": 1783020541570
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 36,
+      "timestamp": 1783020975629
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 66,
+      "timestamp": 1783024059829
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 83,
+      "timestamp": 1783025087929
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 89,
+      "timestamp": 1783025425238
+    }
+  ],
+  "fires": [],
+  "computedAt": "2026-07-14T21:55:14.632Z"
+}

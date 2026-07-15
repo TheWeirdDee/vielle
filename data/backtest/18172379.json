@@ -1,0 +1,73 @@
+{
+  "matchId": "18172379",
+  "homeTeam": "USA",
+  "awayTeam": "Bosnia & Herzegovina",
+  "homeScore": 2,
+  "awayScore": 0,
+  "phase": "F",
+  "winner": "home",
+  "keyEvents": [
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 30,
+      "timestamp": 1782952197200
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 31,
+      "timestamp": 1782952268971
+    },
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 32,
+      "timestamp": 1782952304130
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 45,
+      "timestamp": 1782953072706
+    },
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 64,
+      "timestamp": 1782955782790
+    },
+    {
+      "type": "red_card",
+      "team": "home",
+      "minute": 64,
+      "timestamp": 1782955784237
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 79,
+      "timestamp": 1782956660505
+    },
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 79,
+      "timestamp": 1782956697480
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 80,
+      "timestamp": 1782956777290
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 82,
+      "timestamp": 1782956870554
+    }
+  ],
+  "fires": [],
+  "computedAt": "2026-07-14T21:54:16.441Z"
+}

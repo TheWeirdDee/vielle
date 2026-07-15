@@ -1,0 +1,194 @@
+{
+  "matchId": "18192996",
+  "homeTeam": "Mexico",
+  "awayTeam": "England",
+  "homeScore": 2,
+  "awayScore": 3,
+  "phase": "F",
+  "winner": "away",
+  "keyEvents": [
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 1,
+      "timestamp": 1783299670861
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 36,
+      "timestamp": 1783301768073
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 38,
+      "timestamp": 1783301866016
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 42,
+      "timestamp": 1783302121087
+    },
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 43,
+      "timestamp": 1783302173724
+    },
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 54,
+      "timestamp": 1783304128284
+    },
+    {
+      "type": "red_card",
+      "team": "away",
+      "minute": 54,
+      "timestamp": 1783304129949
+    },
+    {
+      "type": "penalty",
+      "team": "away",
+      "minute": 58,
+      "timestamp": 1783304377837
+    },
+    {
+      "type": "penalty",
+      "team": "away",
+      "minute": 58,
+      "timestamp": 1783304397649
+    },
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 59,
+      "timestamp": 1783304484875
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 60,
+      "timestamp": 1783304537255
+    },
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 68,
+      "timestamp": 1783304972824
+    },
+    {
+      "type": "penalty",
+      "team": "home",
+      "minute": 68,
+      "timestamp": 1783304977168
+    },
+    {
+      "type": "penalty",
+      "team": "home",
+      "minute": 68,
+      "timestamp": 1783304979352
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 69,
+      "timestamp": 1783305025857
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 69,
+      "timestamp": 1783305061352
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 71,
+      "timestamp": 1783305188493
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 72,
+      "timestamp": 1783305245637
+    },
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 84,
+      "timestamp": 1783305941581
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 98,
+      "timestamp": 1783306812455
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 99,
+      "timestamp": 1783306839311
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 99,
+      "timestamp": 1783306870695
+    }
+  ],
+  "fires": [
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "A",
+      "matchId": "18192996",
+      "homeTeam": "Mexico",
+      "awayTeam": "England",
+      "triggerEvent": "goal",
+      "triggerMinute": 36,
+      "preEventHomeProb": 0.09804,
+      "preEventAwayProb": 0.32787,
+      "postSignalHomeProb": 0.09804,
+      "postSignalAwayProb": 0.6724899999999999,
+      "delta": 0.3446199999999999,
+      "windowSeconds": 50.966,
+      "favouredTeam": "away",
+      "position": "long_away",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783301819039,
+      "outcome": "hit",
+      "actualWinner": "away"
+    },
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "B",
+      "matchId": "18192996",
+      "homeTeam": "Mexico",
+      "awayTeam": "England",
+      "triggerEvent": "goal",
+      "triggerMinute": 36,
+      "preEventHomeProb": 0.09804,
+      "preEventAwayProb": 0.32787,
+      "postSignalHomeProb": 0.09804,
+      "postSignalAwayProb": 0.6724899999999999,
+      "delta": 0.3446199999999999,
+      "windowSeconds": 50.966,
+      "favouredTeam": "away",
+      "position": "short_away",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783301819039,
+      "outcome": "miss",
+      "actualWinner": "away"
+    }
+  ],
+  "computedAt": "2026-07-14T22:00:37.920Z"
+}

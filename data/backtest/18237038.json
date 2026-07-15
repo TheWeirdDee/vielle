@@ -1,0 +1,116 @@
+{
+  "matchId": "18237038",
+  "homeTeam": "France",
+  "awayTeam": "Spain",
+  "homeScore": 0,
+  "awayScore": 2,
+  "phase": "F",
+  "winner": "away",
+  "keyEvents": [
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 9,
+      "timestamp": 1784056127958
+    },
+    {
+      "type": "penalty",
+      "team": "away",
+      "minute": 20,
+      "timestamp": 1784056774470
+    },
+    {
+      "type": "penalty",
+      "team": "away",
+      "minute": 20,
+      "timestamp": 1784056898559
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 22,
+      "timestamp": 1784056922374
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 31,
+      "timestamp": 1784057439701
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 58,
+      "timestamp": 1784060376027
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 61,
+      "timestamp": 1784060549958
+    },
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 61,
+      "timestamp": 1784060573720
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 86,
+      "timestamp": 1784062067854
+    }
+  ],
+  "fires": [
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "A",
+      "matchId": "18237038",
+      "homeTeam": "France",
+      "awayTeam": "Spain",
+      "triggerEvent": "goal",
+      "triggerMinute": 22,
+      "preEventHomeProb": 0.16255,
+      "preEventAwayProb": 0.29568,
+      "postSignalHomeProb": 0.16255,
+      "postSignalAwayProb": 0.58343,
+      "delta": 0.28775,
+      "windowSeconds": 18.529,
+      "favouredTeam": "away",
+      "position": "long_away",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1784056940903,
+      "outcome": "hit",
+      "actualWinner": "away"
+    },
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "B",
+      "matchId": "18237038",
+      "homeTeam": "France",
+      "awayTeam": "Spain",
+      "triggerEvent": "goal",
+      "triggerMinute": 22,
+      "preEventHomeProb": 0.16255,
+      "preEventAwayProb": 0.29568,
+      "postSignalHomeProb": 0.16255,
+      "postSignalAwayProb": 0.58343,
+      "delta": 0.28775,
+      "windowSeconds": 18.529,
+      "favouredTeam": "away",
+      "position": "short_away",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1784056940903,
+      "outcome": "miss",
+      "actualWinner": "away"
+    }
+  ],
+  "computedAt": "2026-07-14T22:03:41.503Z"
+}

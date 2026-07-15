@@ -1,0 +1,86 @@
+{
+  "matchId": "18198205",
+  "homeTeam": "Portugal",
+  "awayTeam": "Spain",
+  "homeScore": 0,
+  "awayScore": 1,
+  "phase": "F",
+  "winner": "away",
+  "keyEvents": [
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 89,
+      "timestamp": 1783371055209
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 91,
+      "timestamp": 1783371172752
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 94,
+      "timestamp": 1783371347194
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 99,
+      "timestamp": 1783371645414
+    }
+  ],
+  "fires": [
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "A",
+      "matchId": "18198205",
+      "homeTeam": "Portugal",
+      "awayTeam": "Spain",
+      "triggerEvent": "goal",
+      "triggerMinute": 91,
+      "preEventHomeProb": 0.006670000000000001,
+      "preEventAwayProb": 0.13289,
+      "postSignalHomeProb": 0.006670000000000001,
+      "postSignalAwayProb": 0.90416,
+      "delta": 0.7712699999999999,
+      "windowSeconds": 85.544,
+      "favouredTeam": "away",
+      "position": "long_away",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783371258296,
+      "outcome": "hit",
+      "actualWinner": "away"
+    },
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "B",
+      "matchId": "18198205",
+      "homeTeam": "Portugal",
+      "awayTeam": "Spain",
+      "triggerEvent": "goal",
+      "triggerMinute": 91,
+      "preEventHomeProb": 0.006670000000000001,
+      "preEventAwayProb": 0.13289,
+      "postSignalHomeProb": 0.006670000000000001,
+      "postSignalAwayProb": 0.90416,
+      "delta": 0.7712699999999999,
+      "windowSeconds": 85.544,
+      "favouredTeam": "away",
+      "position": "short_away",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783371258296,
+      "outcome": "miss",
+      "actualWinner": "away"
+    }
+  ],
+  "computedAt": "2026-07-14T22:01:01.968Z"
+}

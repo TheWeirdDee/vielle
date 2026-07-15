@@ -1,0 +1,128 @@
+{
+  "matchId": "18187298",
+  "homeTeam": "Brazil",
+  "awayTeam": "Norway",
+  "homeScore": 1,
+  "awayScore": 2,
+  "phase": "F",
+  "winner": "away",
+  "keyEvents": [
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 3,
+      "timestamp": 1783281772844
+    },
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 4,
+      "timestamp": 1783281819336
+    },
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 12,
+      "timestamp": 1783282327656
+    },
+    {
+      "type": "penalty",
+      "team": "home",
+      "minute": 12,
+      "timestamp": 1783282331386
+    },
+    {
+      "type": "penalty",
+      "team": "home",
+      "minute": 12,
+      "timestamp": 1783282337985
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 79,
+      "timestamp": 1783287683658
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 90,
+      "timestamp": 1783288294967
+    },
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 96,
+      "timestamp": 1783288657408
+    },
+    {
+      "type": "penalty",
+      "team": "home",
+      "minute": 98,
+      "timestamp": 1783288813619
+    },
+    {
+      "type": "penalty",
+      "team": "home",
+      "minute": 98,
+      "timestamp": 1783288883862
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 100,
+      "timestamp": 1783288927563
+    }
+  ],
+  "fires": [
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "A",
+      "matchId": "18187298",
+      "homeTeam": "Brazil",
+      "awayTeam": "Norway",
+      "triggerEvent": "goal",
+      "triggerMinute": 79,
+      "preEventHomeProb": 0.07407,
+      "preEventAwayProb": 0.13024,
+      "postSignalHomeProb": 0.07407,
+      "postSignalAwayProb": 0.65876,
+      "delta": 0.52852,
+      "windowSeconds": 55.234,
+      "favouredTeam": "away",
+      "position": "long_away",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783287738892,
+      "outcome": "hit",
+      "actualWinner": "away"
+    },
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "B",
+      "matchId": "18187298",
+      "homeTeam": "Brazil",
+      "awayTeam": "Norway",
+      "triggerEvent": "goal",
+      "triggerMinute": 79,
+      "preEventHomeProb": 0.07407,
+      "preEventAwayProb": 0.13024,
+      "postSignalHomeProb": 0.07407,
+      "postSignalAwayProb": 0.65876,
+      "delta": 0.52852,
+      "windowSeconds": 55.234,
+      "favouredTeam": "away",
+      "position": "short_away",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783287738892,
+      "outcome": "miss",
+      "actualWinner": "away"
+    }
+  ],
+  "computedAt": "2026-07-14T22:00:13.944Z"
+}

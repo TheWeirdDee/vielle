@@ -1,0 +1,242 @@
+{
+  "matchId": "18179763",
+  "homeTeam": "Portugal",
+  "awayTeam": "Croatia",
+  "homeScore": 2,
+  "awayScore": 1,
+  "phase": "F",
+  "winner": "home",
+  "keyEvents": [
+    {
+      "type": "yellow_card",
+      "team": "home",
+      "minute": 17,
+      "timestamp": 1783034187303
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 53,
+      "timestamp": 1783037580371
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 60,
+      "timestamp": 1783037963156
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 61,
+      "timestamp": 1783038022044
+    },
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 62,
+      "timestamp": 1783038085989
+    },
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 66,
+      "timestamp": 1783038364653
+    },
+    {
+      "type": "penalty",
+      "team": "home",
+      "minute": 66,
+      "timestamp": 1783038369694
+    },
+    {
+      "type": "penalty",
+      "team": "home",
+      "minute": 66,
+      "timestamp": 1783038371372
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 68,
+      "timestamp": 1783038441442
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 80,
+      "timestamp": 1783039204798
+    },
+    {
+      "type": "goal",
+      "team": "home",
+      "minute": 94,
+      "timestamp": 1783040006352
+    },
+    {
+      "type": "yellow_card",
+      "team": "away",
+      "minute": 98,
+      "timestamp": 1783040253874
+    },
+    {
+      "type": "goal",
+      "team": "away",
+      "minute": 103,
+      "timestamp": 1783040565448
+    },
+    {
+      "type": "var_end",
+      "team": null,
+      "minute": 105,
+      "timestamp": 1783040712407
+    }
+  ],
+  "fires": [
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "A",
+      "matchId": "18179763",
+      "homeTeam": "Portugal",
+      "awayTeam": "Croatia",
+      "triggerEvent": "goal",
+      "triggerMinute": 53,
+      "preEventHomeProb": 0.21155000000000002,
+      "preEventAwayProb": 0.15539999999999998,
+      "postSignalHomeProb": 0.21155000000000002,
+      "postSignalAwayProb": 0.46685000000000004,
+      "delta": 0.31145000000000006,
+      "windowSeconds": 42.181,
+      "favouredTeam": "away",
+      "position": "long_away",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783037622552,
+      "outcome": "miss",
+      "actualWinner": "home"
+    },
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "B",
+      "matchId": "18179763",
+      "homeTeam": "Portugal",
+      "awayTeam": "Croatia",
+      "triggerEvent": "goal",
+      "triggerMinute": 53,
+      "preEventHomeProb": 0.21155000000000002,
+      "preEventAwayProb": 0.15539999999999998,
+      "postSignalHomeProb": 0.21155000000000002,
+      "postSignalAwayProb": 0.46685000000000004,
+      "delta": 0.31145000000000006,
+      "windowSeconds": 42.181,
+      "favouredTeam": "away",
+      "position": "short_away",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783037622552,
+      "outcome": "hit",
+      "actualWinner": "home"
+    },
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "A",
+      "matchId": "18179763",
+      "homeTeam": "Portugal",
+      "awayTeam": "Croatia",
+      "triggerEvent": "goal",
+      "triggerMinute": 68,
+      "preEventHomeProb": 0.18688,
+      "preEventAwayProb": 0.12516,
+      "postSignalHomeProb": 0.46338999999999997,
+      "postSignalAwayProb": 0.12516,
+      "delta": 0.27651,
+      "windowSeconds": 4.891,
+      "favouredTeam": "home",
+      "position": "long_home",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783038446333,
+      "outcome": "hit",
+      "actualWinner": "home"
+    },
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "B",
+      "matchId": "18179763",
+      "homeTeam": "Portugal",
+      "awayTeam": "Croatia",
+      "triggerEvent": "goal",
+      "triggerMinute": 68,
+      "preEventHomeProb": 0.18688,
+      "preEventAwayProb": 0.12516,
+      "postSignalHomeProb": 0.46338999999999997,
+      "postSignalAwayProb": 0.12516,
+      "delta": 0.27651,
+      "windowSeconds": 4.891,
+      "favouredTeam": "home",
+      "position": "short_home",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783038446333,
+      "outcome": "miss",
+      "actualWinner": "home"
+    },
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "A",
+      "matchId": "18179763",
+      "homeTeam": "Portugal",
+      "awayTeam": "Croatia",
+      "triggerEvent": "goal",
+      "triggerMinute": 94,
+      "preEventHomeProb": 0.15699,
+      "preEventAwayProb": 0.00526,
+      "postSignalHomeProb": 0.91743,
+      "postSignalAwayProb": 0.00526,
+      "delta": 0.76044,
+      "windowSeconds": 62.937,
+      "favouredTeam": "home",
+      "position": "long_home",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783040069289,
+      "outcome": "hit",
+      "actualWinner": "home"
+    },
+    {
+      "signalRegistryId": "719d89c2-c1fc-4061-8c81-ba099322848f",
+      "strategy": "B",
+      "matchId": "18179763",
+      "homeTeam": "Portugal",
+      "awayTeam": "Croatia",
+      "triggerEvent": "goal",
+      "triggerMinute": 94,
+      "preEventHomeProb": 0.15699,
+      "preEventAwayProb": 0.00526,
+      "postSignalHomeProb": 0.91743,
+      "postSignalAwayProb": 0.00526,
+      "delta": 0.76044,
+      "windowSeconds": 62.937,
+      "favouredTeam": "home",
+      "position": "short_home",
+      "recoveredFromSnapshot": false,
+      "onchainStatus": "pending",
+      "subscribersNotified": 0,
+      "subscribersFailed": 0,
+      "firedAt": 1783040069289,
+      "outcome": "miss",
+      "actualWinner": "home"
+    }
+  ],
+  "computedAt": "2026-07-14T21:55:53.264Z"
+}
