@@ -45,6 +45,7 @@ interface MatchTracker {
   lastTrigger: LastTrigger | null
   cooldownUntil: number
   state: MatchState | null
+  recoveredContext: boolean
 }
 
 function buildSignal(
@@ -56,7 +57,8 @@ function buildSignal(
   event: OddsEvent,
   trigger: LastTrigger,
   state: MatchState,
-  signalRegistryId: string
+  signalRegistryId: string,
+  recoveredFromSnapshot: boolean
 ): VeilleSignal {
   const position: Position =
     strategy === 'A'
@@ -83,7 +85,7 @@ function buildSignal(
     windowSeconds,
     favouredTeam,
     position,
-    recoveredFromSnapshot: false,
+    recoveredFromSnapshot,
     onchainStatus: 'pending',
     subscribersNotified: 0,
     subscribersFailed: 0,
@@ -102,7 +104,14 @@ export class SignalDetector {
   private tracker(matchId: string): MatchTracker {
     let t = this.matches.get(matchId)
     if (!t) {
-      t = { homeWindow: [], awayWindow: [], lastTrigger: null, cooldownUntil: 0, state: null }
+      t = {
+        homeWindow: [],
+        awayWindow: [],
+        lastTrigger: null,
+        cooldownUntil: 0,
+        state: null,
+        recoveredContext: false,
+      }
       this.matches.set(matchId, t)
     }
     return t
@@ -115,7 +124,25 @@ export class SignalDetector {
 
   /** Restore last-known trigger context after a process restart (from veille_match_state). */
   seedTrigger(matchId: string, trigger: { type: EventType; team: 'home' | 'away'; ts: number; minute: number }): void {
-    this.tracker(matchId).lastTrigger = trigger
+    const tracker = this.tracker(matchId)
+    tracker.lastTrigger = trigger
+    tracker.recoveredContext = true
+  }
+
+  /** Restore the last pre-trigger odds baseline after a process restart. */
+  seedOdds(matchId: string, odds: { homeProb: number; awayProb: number; timestamp: number }): void {
+    const tracker = this.tracker(matchId)
+    tracker.homeWindow.push({ prob: odds.homeProb, timestamp: odds.timestamp })
+    tracker.awayWindow.push({ prob: odds.awayProb, timestamp: odds.timestamp })
+    tracker.recoveredContext = true
+  }
+
+  seedCooldown(matchId: string, cooldownUntil: number): void {
+    this.tracker(matchId).cooldownUntil = cooldownUntil
+  }
+
+  getCooldownUntil(matchId: string): number {
+    return this.tracker(matchId).cooldownUntil
   }
 
   hasTracker(matchId: string): boolean {
@@ -123,9 +150,10 @@ export class SignalDetector {
   }
 
   /** Feed a normalized scores-stream event. Tracks triggers and cooldown resets. */
-  onMatchEvent(event: MatchEvent, state: MatchState): void {
+  onMatchEvent(event: MatchEvent, state: MatchState, recoveredFromSnapshot = false): void {
     const t = this.tracker(event.matchId)
     t.state = state
+    t.recoveredContext = recoveredFromSnapshot
 
     if (TRIGGER_EVENTS.has(event.type) && event.team) {
       t.lastTrigger = { type: event.type, team: event.team, ts: event.timestamp, minute: event.minute }
@@ -177,7 +205,12 @@ export class SignalDetector {
       const delta = currentProb - preEvent.prob
       if (delta <= this.def.deltaThreshold) return null
 
-      return { delta, windowSeconds: (now - t.lastTrigger!.ts) / 1000, preEvent }
+      return {
+        delta,
+        // Keep the live insert compatible with the INTEGER database column.
+        windowSeconds: Math.round((now - t.lastTrigger!.ts) / 1000),
+        preEvent,
+      }
     }
 
     const homeResult = check(t.homeWindow, event.homeProb, event.awayProb)
@@ -197,7 +230,8 @@ export class SignalDetector {
         event,
         t.lastTrigger!,
         t.state!,
-        this.def.id
+        this.def.id,
+        t.recoveredContext
       )
     )
   }

@@ -93,7 +93,9 @@ export interface Subscriber {
 }
 
 export interface SubscriberPayload {
-  veille_version: 1
+  veille_version: 2
+  delivery_id: string
+  sent_at: number
   event: 'signal_fired' | 'position_settled'
   signal_id: string
   strategy: Strategy
@@ -111,7 +113,6 @@ export interface SubscriberPayload {
   txline_proof: string
   fired_at: number
   outcome?: SignalOutcome
-  hmac_signature: string
 }
 
 /** One sample in a per-team rolling probability window. */

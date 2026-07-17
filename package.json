@@ -14,16 +14,15 @@
     "test": "tsx scripts/test-integration.ts",
     "test:engine": "tsx scripts/test-engine.ts",
     "replay": "tsx scripts/run-replay.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "check": "npm run build && npm run test:engine"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.32.1",
     "@solana/spl-token": "^0.4.15",
     "@solana/web3.js": "^1.98.4",
     "@supabase/supabase-js": "^2.110.2",
-    "axios": "^1.18.1",
     "bs58": "^6.0.0",
-    "eventsource": "^4.1.0",
     "tweetnacl": "^1.0.3"
   },
   "devDependencies": {

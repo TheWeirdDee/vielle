@@ -27,6 +27,7 @@ const MAX_QUEUE = 2000
 // bytes at all arrive for this long, abort and reconnect.
 const IDLE_TIMEOUT_MS = 150_000
 const IDLE_CHECK_MS = 30_000
+const CONNECT_TIMEOUT_MS = 20_000
 
 // ---------------------------------------------------------------------------
 // SSE plumbing
@@ -125,15 +126,23 @@ function startSseLoop(
         const { jwt, apiToken } = await getCredentials()
         const controller = new AbortController()
         handle.abort = controller
-        const res = await fetch(`${getApiBase()}${path}`, {
-          headers: {
-            Authorization: `Bearer ${jwt}`,
-            'X-Api-Token': apiToken,
-            Accept: 'text/event-stream',
-            'Cache-Control': 'no-cache',
-          },
-          signal: controller.signal,
-        })
+        const connectTimer = setTimeout(() => {
+          controller.abort(new Error(`SSE ${path} connection timed out`))
+        }, CONNECT_TIMEOUT_MS)
+        let res: Response
+        try {
+          res = await fetch(`${getApiBase()}${path}`, {
+            headers: {
+              Authorization: `Bearer ${jwt}`,
+              'X-Api-Token': apiToken,
+              Accept: 'text/event-stream',
+              'Cache-Control': 'no-cache',
+            },
+            signal: controller.signal,
+          })
+        } finally {
+          clearTimeout(connectTimer)
+        }
 
         if (res.status === 401 || res.status === 403) {
           await res.body?.cancel().catch(() => undefined)
@@ -235,6 +244,9 @@ export function connectScoresStream(callbacks: StreamCallbacks): () => void {
     const matchId = String(record.FixtureId)
     const prev = states.get(matchId)
     if (!prev) return
+    const lastSeq = seqFence.get(matchId) ?? 0
+    if (record.Seq <= lastSeq) return
+    seqFence.set(matchId, record.Seq)
     const next = applyRecordToState(prev, record)
     states.set(matchId, next)
     const event = normalizer.normalize(record)
@@ -306,6 +318,7 @@ export function connectOddsStream(callbacks: StreamCallbacks): () => void {
   const normalizer = new OddsNormalizer()
   const orientations = new Map<string, boolean>()
   const pending = new Map<string, TxLineOddsRecord[]>()
+  const recentMessageIds = new Set<string>()
 
   const emit = (record: TxLineOddsRecord): void => {
     const p1IsHome = orientations.get(String(record.FixtureId)) ?? true
@@ -329,6 +342,12 @@ export function connectOddsStream(callbacks: StreamCallbacks): () => void {
 
   const onRecord = (data: unknown): void => {
     if (!isOddsRecord(data)) return
+    if (recentMessageIds.has(data.MessageId)) return
+    recentMessageIds.add(data.MessageId)
+    if (recentMessageIds.size > 10_000) {
+      const oldest = recentMessageIds.values().next().value as string | undefined
+      if (oldest) recentMessageIds.delete(oldest)
+    }
     const matchId = String(data.FixtureId)
     if (orientations.has(matchId)) {
       emit(data)

@@ -1,109 +1,83 @@
 # VEILLE
 
-**Autonomous odds intelligence. Two agents. 104 matches. Zero human input.**
+VEILLE is a deterministic World Cup odds-signal engine. SCOUT consumes TxLINE score and odds streams, persists qualifying signals, and reconciles Solana/webhook side effects. CLERK settles positions from final scores and recomputes outcome statistics.
 
-VEILLE is an autonomous trading intelligence system that runs continuously across all 104 World Cup matches. It watches TxLINE's live odds stream, detects a pre-registered mathematical signal, manages a verifiable position portfolio like a fund, and writes every decision to Solana with cryptographic proof. A professional trading desk can audit every signal independently — they don't need to trust our dashboard numbers.
+## What the metrics mean
 
-Built for the TxODDS World Cup Hackathon · Trading Tools & Agents Track · July 2026
+The two strategies score the same signal in opposite ways:
 
----
+- Strategy A: long the newly favoured team.
+- Strategy B: short the newly favoured team.
 
-## Two Agents
+A hit contributes `+1` and a miss contributes `-1`. The stored `pnl_units`, `sharpe_ratio`, and drawdown columns are legacy names for this outcome score. They are not executable trading P&L or an execution-return Sharpe ratio: entry prices, stake sizing, fees, liquidity, and slippage are not modeled.
 
-**VEILLE SCOUT** — the surveillance agent. Runs 24/7 during matches. Watches TxLINE's odds and scores SSE streams across all active matches simultaneously. Detects signals. Opens positions. Writes signal proofs to Solana. Notifies B2B subscribers within 500ms.
+## Integrity model
 
-**VEILLE CLERK** — the settlement agent. Polls every 5 minutes for completed matches. Reads TxLINE's final score data. Closes positions against actual outcomes. Updates portfolio statistics. Writes settlement records to Solana.
+- The signal definition is append-only after registration.
+- A deterministic dedupe key prevents duplicate signal rows.
+- Match state, last trigger, odds baseline, cooldown, and stream sequence are persisted for restart recovery.
+- Signal and settlement effects use durable delivery state and startup reconciliation.
+- Solana retries resend the same signed transaction within one write attempt.
+- Webhook v2 signs the exact raw body in `X-VEILLE-Signature` and includes a stable delivery ID.
+- Raw TxLINE replay verification compares the independent and published fire sets in both directions.
 
----
+Solana memos currently contain `txline_proof: null`. The system does not claim native TxLINE proof validation until the feed supplies a proof reference that can be fetched and checked.
 
-## The Signal (Pre-Registered · Timestamped · Immutable)
+## Setup
 
-Registered before tournament results were known. Cannot be changed retroactively. This is what makes the track record credible.
+Requires Node.js 22 or newer.
 
+```bash
+npm ci
+copy env.example .env
+npm run activate
 ```
-Name: POST_EVENT_PROB_SHOCK
 
-Fires when ALL conditions are true:
-1. Win probability shifts ≥ 12% within a 120-second rolling window
-2. A goal OR red card occurred within the preceding 180 seconds  
-3. Pre-event odds implied < 40% for the now-favoured team
+Apply both SQL files in the Supabase SQL editor before starting an agent:
 
-Hypothesis: Markets systematically underreact to high-impact in-play 
-events when the favoured team was previously an underdog.
+1. `supabase/schema.sql`
+2. `supabase/heartbeat.sql`
 
-Cooldown: 5 minutes per match (prevents signal clustering)
+Then register and anchor the definition once, and initialize both portfolio rows:
+
+```bash
+npm run register-signal
+npx tsx scripts/anchor-registration.ts
+npm run init-portfolio
 ```
 
-**Strategy A** — LONG the newly favoured team when signal fires.  
-**Strategy B** — SHORT (inverse position). Runs simultaneously. Proves which strategy performs better across 104 matches.
+The registry trigger rejects later updates or deletes. Keep the registration transaction signature and configured wallet public key available to the dashboard verifier.
 
-Signal registered at: `[timestamp from veille_signal_registry table]`
+## Run and verify
 
----
+```bash
+npm run build
+npm run test:engine
+npm test
+npm run scout
+npm run clerk
+```
 
-## Four Layers
+`npm run test:engine` is deterministic and offline. `npm test` performs read-only TxLINE and Supabase checks plus a loopback webhook protocol check. It never inserts production data, contacts registered subscribers, or spends SOL.
 
-**Layer 1 — Signal Engine:** Pre-registered mathematical signal. Deterministic. No ML, no black box. Anyone can read the logic and verify it matches the on-chain records.
+Replay one cached match instantly:
 
-**Layer 2 — Portfolio Management:** Fund-level statistics across all 104 matches. Win rate, Sharpe ratio, maximum drawdown, P&L in units. Updated after every settled position. Strategy A vs B comparison visible in the dashboard.
+```bash
+npm run replay -- 18222446
+npx tsx scripts/independent-verify.ts 18222446
+```
 
-**Layer 3 — On-Chain Ledger:** Every signal fire and settlement written to Solana as a memo transaction referencing TxLINE's cryptographic proof. Independently auditable — click any transaction link on the dashboard and verify on Solana Explorer without trusting us.
+## Webhook v2
 
-**Layer 4 — Subscriber Protocol (B2B):** Trading desks and market operators subscribe their execution systems via webhook. VEILLE delivers structured signal payloads within 500ms of firing, HMAC-signed for authentication. A subscriber can build automated execution on top of VEILLE's signals without any human in the loop.
-
----
-
-## Resilience (Production Readiness)
-
-Every failure mode handled without human intervention:
-
-- **SSE drops:** Exponential backoff reconnect (1s → 2s → 4s → 8s → 16s → 30s). Snapshot recovery on reconnect catches any missed events.
-- **JWT expiry:** Auto-renewed on 401 before reconnecting.
-- **Abandoned matches:** All open positions voided automatically. Excluded from statistics.
-- **Postponed matches:** Positions held. CLERK re-checks every poll cycle until match resumes.
-- **Duplicate signals:** 5-minute cooldown per match prevents signal clustering.
-- **On-chain write failures:** 3 retries with exponential backoff. Signal always saved to Supabase first — never silently dropped. Failed writes surfaced prominently in dashboard.
-- **Subscriber delivery failures:** 3 retries per subscriber. Failed deliveries logged with full context.
-
-All events logged to `veille_agent_log` table with severity levels. The agent log is visible in the dashboard — proof the system ran autonomously.
-
----
-
-## TxLINE Integration
-
-| Endpoint | Agent | Purpose |
-|----------|-------|---------|
-| `GET /api/odds/stream` (SSE) | SCOUT | Live odds for signal detection |
-| `GET /api/scores/stream` (SSE) | SCOUT | Live events for trigger detection |
-| `GET /api/fixtures` | Both | Match list, status monitoring |
-| `GET /api/scores/{matchId}/history` | CLERK | Final score for settlement |
-| `GET /api/odds/{matchId}/history` | CLERK | Odds context at signal time |
-| Validation proofs | CLERK | Cryptographic reference for on-chain writes |
-
-**Auth:** Service Level 12 (real-time, free World Cup tier). Mainnet. Server-side only.
-
----
-
-## Portfolio Statistics
-
-After each settled position, CLERK recalculates:
-
-**Win Rate** — `hits / (hits + misses)`, voids excluded  
-**Sharpe Ratio** — `mean(returns) / stddev(returns)`, where returns are +1 (hit) or -1 (miss)  
-**Maximum Drawdown** — largest peak-to-trough loss in cumulative P&L series  
-**P&L** — net units won/lost across all settled positions
-
-These are the metrics a trading desk actually evaluates. Not just win rate.
-
----
-
-## Subscriber Webhook Schema
+The JSON body contains:
 
 ```typescript
 {
-  veille_version: 1,
+  veille_version: 2,
+  delivery_id: string,
+  sent_at: number,
   event: 'signal_fired' | 'position_settled',
-  signal_id: string,          // UUID — reference to on-chain record
+  signal_id: string,
   strategy: 'A' | 'B',
   match_id: string,
   home_team: string,
@@ -112,61 +86,29 @@ These are the metrics a trading desk actually evaluates. Not just win rate.
   trigger_minute: number,
   favoured_team: 'home' | 'away',
   position: 'long_home' | 'long_away' | 'short_home' | 'short_away',
-  pre_event_prob: number,     // 0-1
-  post_signal_prob: number,   // 0-1
-  delta: number,              // probability shift magnitude
-  onchain_tx: string,         // Solana transaction signature
-  txline_proof: string,       // TxLINE cryptographic proof reference
-  fired_at: number,           // unix timestamp
-  outcome?: 'hit' | 'miss' | 'void',  // only on settlement events
-  hmac_signature: string      // HMAC-SHA256 for authentication
+  pre_event_prob: number,
+  post_signal_prob: number,
+  delta: number,
+  onchain_tx: string,
+  txline_proof: string,
+  fired_at: number,
+  outcome?: 'hit' | 'miss' | 'void'
 }
 ```
 
----
+Verify `HMAC-SHA256(rawRequestBody, subscriberSecret)` against `X-VEILLE-Signature` with constant-time comparison. Reject stale `X-VEILLE-Timestamp` values and deduplicate `X-VEILLE-Delivery-Id`. Return a non-2xx status when downstream processing fails so VEILLE retries.
 
-## Stack
+## Deploy two Railway services
 
-- **Agents:** Node.js 20 + TypeScript
-- **Dashboard:** Next.js 16.2 + TypeScript + Tailwind CSS
-- **Data:** TxLINE SSE streams (Service Level 12, mainnet)
-- **Database:** Supabase
-- **On-chain:** Solana Memo Program (no custom contract)
-- **Agent deploy:** Railway (SCOUT + CLERK as separate services)
-- **Dashboard deploy:** Vercel
+Create two services from the same repository and migration state:
 
----
+- `veille-scout`: start command `npm run scout`
+- `veille-clerk`: start command `npm run clerk`
 
-## Run Locally
+Both need the TxLINE, Supabase, and Solana environment variables in `env.example`. Use the same wallet and database, deploy the schema first, and keep Railway restart policy set to `ON_FAILURE`. A deployment is healthy only when both rows in `veille_agent_heartbeat` remain fresh.
 
-```bash
-# Clone and install
-git clone https://github.com/TheWeirdDee/veille
-cd veille
-npm install
-cp .env.example .env
+## Security
 
-# One-time setup (run in order)
-npm run activate          # Get TxLINE API token
-npm run register-signal   # Pre-register signal definition (CRITICAL)
-npm run init-portfolio    # Initialize portfolio for Strategy A + B
+Only trusted server processes use the Supabase service role. RLS is enabled on all VEILLE tables with no public policies. Subscriber URLs must be HTTPS, secrets must never reach the dashboard/browser, and integration tests are read-only by default.
 
-# Run agents
-npm run scout             # VEILLE SCOUT (keep running)
-npm run clerk             # VEILLE CLERK (keep running in separate terminal)
-
-# Integration test
-npm run test
-```
-
----
-
-## TxLINE API Feedback
-
-**Loved:** The SSE stream architecture is clean and reliable. Service Level 12 being completely free for World Cup data made the hackathon accessible without financial barriers. The cryptographic anchoring on Solana is genuinely novel infrastructure — no other sports data provider offers this. The guest JWT + API token two-credential system is well-documented.
-
-**Friction:** Field names in SSE payloads required trial and error to confirm — minor discrepancies between the API reference and actual stream output. A versioned stream schema document (similar to a JSON Schema file) would eliminate this friction entirely. The on-chain activation flow has many failure points that surface as ambiguous errors; clearer error codes from the activation endpoint would help builders move faster.
-
----
-
-Built by Divine ([@TheWeirdDee](https://github.com/TheWeirdDee)) · Lagos, Nigeria · 2026
+`npm audit` reports transitive findings inside the pinned Solana v1 stack (`bigint-buffer` via `@solana/spl-token`, `uuid` via `jayson`/`@solana/web3.js`). The available fixes are breaking downgrades, and the affected code paths are not reachable from agent runtime input: the agents only sign and submit memo transactions, and `@solana/spl-token`/`@coral-xyz/anchor` are used solely by the one-time local `npm run activate` script. Re-evaluate when migrating to `@solana/kit`.

@@ -319,11 +319,18 @@ function main(): void {
   const nearMisses = checks.filter((c) => !c.fires)
 
   console.log(`\nCross-checking each independently-detected fire against the published result:`)
-  let allMatch = true
+  let allMatch = fires.length === published.length
+  const matchedPublished = new Set<number>()
   for (const fire of fires) {
-    const match = published.find(
-      (f) => f.favouredTeam === fire.favouredTeam && f.triggerEvent === fire.triggerType && f.triggerMinute === fire.triggerMinute
+    const matchIndex = published.findIndex(
+      (f, index) =>
+        !matchedPublished.has(index) &&
+        f.favouredTeam === fire.favouredTeam &&
+        f.triggerEvent === fire.triggerType &&
+        f.triggerMinute === fire.triggerMinute
     )
+    const match = matchIndex >= 0 ? published[matchIndex] : undefined
+    if (matchIndex >= 0) matchedPublished.add(matchIndex)
     const preClaim = match ? (fire.favouredTeam === 'home' ? match.preEventHomeProb : match.preEventAwayProb) : null
     const postClaim = match ? (fire.favouredTeam === 'home' ? match.postSignalHomeProb : match.postSignalAwayProb) : null
     const close = (a: number, b: number): boolean => Math.abs(a - b) < 0.002
@@ -338,6 +345,15 @@ function main(): void {
     )
   }
 
+  const unmatchedPublished = published.filter((_fire, index) => !matchedPublished.has(index))
+  if (unmatchedPublished.length > 0) {
+    allMatch = false
+    console.log(`\n${unmatchedPublished.length} published fire(s) were not independently reproduced:`)
+    for (const fire of unmatchedPublished) {
+      console.log(`  ${fire.triggerMinute}' ${fire.triggerEvent} -> ${fire.favouredTeam} [UNMATCHED]`)
+    }
+  }
+
   if (nearMisses.length > 0) {
     console.log(`\n${nearMisses.length} moment(s) where a trigger occurred but conditions were NOT met (selectivity check):`)
     for (const m of nearMisses.slice(0, 10)) {
@@ -345,7 +361,7 @@ function main(): void {
     }
   }
 
-  console.log(`\n${allMatch ? 'ALL PUBLISHED FIRES INDEPENDENTLY CONFIRMED' : 'DISCREPANCY FOUND — investigate before trusting the published result'}`)
+  console.log(`\n${allMatch ? 'PUBLISHED AND INDEPENDENT FIRE SETS MATCH' : 'DISCREPANCY FOUND — investigate before trusting the published result'}`)
   if (!allMatch) process.exitCode = 1
 }
 

@@ -16,7 +16,7 @@ export function calculateSharpe(returns: number[]): number {
 }
 
 export function calculateMaxDrawdown(pnlSeries: number[]): number {
-  let peak = pnlSeries[0] ?? 0
+  let peak = 0
   let maxDD = 0
   for (const pnl of pnlSeries) {
     if (pnl > peak) peak = pnl
@@ -30,14 +30,20 @@ export function calculateMaxDrawdown(pnlSeries: number[]): number {
 export async function updatePortfolio(strategy: Strategy): Promise<void> {
   const db = getSupabase()
 
-  const res = await db.from('veille_signals').select('outcome').eq('strategy', strategy).not('outcome', 'is', null)
+  const res = await db
+    .from('veille_signals')
+    .select('outcome, resolved_at, fired_at')
+    .eq('strategy', strategy)
+    .order('resolved_at', { ascending: true, nullsFirst: false })
+    .order('fired_at', { ascending: true })
   if (res.error) throw new Error(`updatePortfolio: ${res.error.message}`)
 
-  const rows = res.data as { outcome: string }[]
-  const settled = rows.filter((r) => r.outcome !== 'void')
+  const rows = res.data as { outcome: string | null }[]
+  const resolved = rows.filter((row): row is { outcome: string } => row.outcome !== null)
+  const settled = resolved.filter((row) => row.outcome !== 'void')
   const hits = settled.filter((r) => r.outcome === 'hit').length
   const misses = settled.filter((r) => r.outcome === 'miss').length
-  const voids = rows.length - settled.length
+  const voids = resolved.length - settled.length
 
   const returns = settled.map((r) => (r.outcome === 'hit' ? 1 : -1))
   const pnl = returns.reduce((a, b) => a + b, 0)
@@ -57,7 +63,8 @@ export async function updatePortfolio(strategy: Strategy): Promise<void> {
 
   const upd = await db
     .from('veille_portfolio')
-    .update({
+    .upsert({
+      strategy,
       total_signals: rows.length,
       total_settled: settled.length,
       hits,
@@ -70,7 +77,6 @@ export async function updatePortfolio(strategy: Strategy): Promise<void> {
       current_drawdown: currentDrawdown,
       peak_pnl: peak,
       last_updated: new Date().toISOString(),
-    })
-    .eq('strategy', strategy)
+    }, { onConflict: 'strategy' })
   if (upd.error) throw new Error(`updatePortfolio write: ${upd.error.message}`)
 }

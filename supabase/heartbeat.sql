@@ -7,6 +7,8 @@ CREATE TABLE IF NOT EXISTS veille_agent_heartbeat (
   last_seen TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+ALTER TABLE veille_agent_heartbeat ENABLE ROW LEVEL SECURITY;
+
 -- One-time cleanup: remove the heartbeat rows already written into
 -- veille_agent_log by the earlier (mistaken) approach.
 DELETE FROM veille_agent_log WHERE event_type = 'heartbeat';

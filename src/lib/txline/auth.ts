@@ -17,6 +17,8 @@ const DEFAULT_API_BASE = 'https://txline.txodds.com/api'
 
 let currentJwt: string | null = null
 let currentApiToken: string | null = null
+let refreshInFlight: Promise<string> | null = null
+const REQUEST_TIMEOUT_MS = 20_000
 
 /** API base URL without trailing slash, e.g. https://txline.txodds.com/api */
 export function getApiBase(): string {
@@ -50,6 +52,7 @@ export async function getGuestJWT(): Promise<string> {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: '{}',
+    signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
   })
   const body = await readBody(res)
   if (!res.ok) {
@@ -65,7 +68,12 @@ export async function getGuestJWT(): Promise<string> {
 
 /** Force a fresh JWT regardless of current state. */
 export async function refreshJWT(): Promise<string> {
-  return getGuestJWT()
+  if (!refreshInFlight) {
+    refreshInFlight = getGuestJWT().finally(() => {
+      refreshInFlight = null
+    })
+  }
+  return refreshInFlight
 }
 
 /**
@@ -108,11 +116,14 @@ export async function authorizedFetch(url: string, init: RequestInit = {}): Prom
     const headers = new Headers(init.headers)
     headers.set('Authorization', `Bearer ${token}`)
     headers.set('X-Api-Token', apiToken)
-    return fetch(url, { ...init, headers })
+    const timeout = AbortSignal.timeout(REQUEST_TIMEOUT_MS)
+    const signal = init.signal ? AbortSignal.any([init.signal, timeout]) : timeout
+    return fetch(url, { ...init, headers, signal })
   }
 
   let res = await attempt(jwt)
-  if (res.status === 401) {
+  if (res.status === 401 || res.status === 403) {
+    await res.body?.cancel().catch(() => undefined)
     const fresh = await refreshJWT()
     res = await attempt(fresh)
   }
@@ -145,6 +156,7 @@ export async function activateToken(
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${jwt}` },
     body: JSON.stringify({ txSig, walletSignature, leagues }),
+    signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
   })
   const body = await readBody(res)
   if (!res.ok) {
